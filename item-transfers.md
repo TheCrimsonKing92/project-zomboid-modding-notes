@@ -2,12 +2,14 @@
 Notes on transferring items between the game and a client.
 
 ## Use the Platform
-ISInventoryTransferAction exists. For the most part you point it at the character, item, item's container, and new (player's, usually) inventory.
+ISInventoryTransferAction exists. For the most part you point it at the character, item, item's container, and new (character's, usually) inventory.
 
 ## Multiplayer Hangups
 In Multiplayer (I tend to test mod changes in the Project Zomboid Dedicated Server, running in no-Steam mode), you may find that item transfers "just don't work".
 
-*Perhaps* because I created ISInventoryTransferAction objects in my action's update function (perhaps not), I found transfers on servers to become inconsistent and fail. There may be a more elegant solution in the timing of when I create the action or add it to the queue, but I found that adding state to the ISInventoryTransferAction which prevents calling its doActionAnim function multiple times also prevents the failure. doActionAnim is important not because of the animations, but because it calls the Lua global createItemTransaction(InventoryItem item, InventoryContainer srcContainer, InventoryContainer destContainer). This in turn calls the static Java method ItemTransactionManager.createItemTransaction to register the item transaction and transmit packets.
+*Perhaps* because I created ISInventoryTransferAction objects in my action's update function (perhaps not), I found transfers on servers to become inconsistent and fail. There may be a more elegant solution in the timing of when I create the action or add it to the queue, but I found that adding state to the ISInventoryTransferAction which prevents calling its doActionAnim function multiple times also prevents the failure.
+
+doActionAnim is important not because of the animations per se, but because it calls the Lua global createItemTransaction(InventoryItem item, InventoryContainer srcContainer, InventoryContainer destContainer). This in turn calls the static Java method ItemTransactionManager.createItemTransaction to register the item transaction and transmit packets.
 
 ### Example Fix
 ```lua
