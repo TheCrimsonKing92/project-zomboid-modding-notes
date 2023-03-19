@@ -1,5 +1,5 @@
 # Transferring Items
-Notes on transferring items between the game and a client.
+Notes on transferring items between inventories from a game client.
 
 ## Use the Platform
 ISInventoryTransferAction exists. For the most part you point it at the character, item, item's container, and new (character's, usually) inventory.
