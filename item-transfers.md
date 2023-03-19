@@ -59,7 +59,8 @@ self.transferItemAction = transferItemAction;
     -> get the srcContainerContainingItemId
     -> get the destContainerContainingItemId
 
-    Debug logs in the format of:
+    Debug log prefix: DEBUG: Multiplayer , 1679233416890> 2,701,653,232> ItemTransactionManager.receiveOnClient> 
+    Debug log contents in the format of:
         <state> [ itemId : srcContainerContainingItemId => destContainerContainingItemId]
 
     ItemRequest state bytes:
@@ -67,9 +68,13 @@ self.transferItemAction = transferItemAction;
         StateRejected 1
         StateAccepted 2
 
-    Example (bad case) logs for ItemTransactionManager.receiveOnClient:
+    Example (bad case) logs for ItemTransactionManager.receiveOnClient indicate the transfer transaction is accepted, then rejected:
         2[1817133102: -1 => -1]
         1[1817133102: -1 => -1]
+
+    Example (good case) simply has an accepted state twice:
+        2 [ 1359383190 : -1 => -1 ]
+        2 [ 1359383190 : -1 => -1 ]
 ]]--
 -- ItemTransactionManager.isConsistent(self.item:getID(), srcContainerId, destContainerId);
 -- return itm.requests.stream()
